@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbearia (nome de demonstração) – Corte, barba e estilo</title>
+<meta name="description" content="Site de demonstração de barbearia: serviços, diferenciais, galeria e agendamento pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ========== VARIÁVEIS ========== */
+:root{
+  --azul:#12233f; --azul2:#1c3257; --vermelho:#c8372d; --vermelho2:#a92b22;
+  --branco:#f6f7f9; --cinza:#5c6778; --linha:#dde2ea; --zap:#1fa855;
+  --titulo:'Barlow Condensed','Arial Narrow',sans-serif;
+  --texto:'Barlow',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--texto);color:var(--azul);background:var(--branco);line-height:1.6;font-size:17px}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--vermelho);outline-offset:3px}
+.wrap{width:min(1120px,92%);margin:0 auto}
+h1,h2,h3{font-family:var(--titulo);line-height:1.05;font-weight:700;letter-spacing:.01em}
+h2{font-size:clamp(2.2rem,5.5vw,3.3rem);margin-bottom:10px}
+section{padding:80px 0}
+.sub{color:var(--cinza);max-width:56ch;margin-bottom:36px}
+
+/* listra de barbeiro (divisor) */
+.listra{height:10px;background:repeating-linear-gradient(-45deg,var(--vermelho) 0 14px,#fff 14px 28px,var(--azul2) 28px 42px,#fff 42px 56px)}
+
+/* aviso demo */
+.demo{background:var(--vermelho);color:#fff;text-align:center;font-size:.85rem;padding:6px 10px}
+
+/* ========== CABEÇALHO ========== */
+header{position:sticky;top:0;z-index:50;background:var(--azul);box-shadow:0 2px 14px rgba(0,0,0,.2)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-family:var(--titulo);font-size:1.5rem;font-weight:700}
+.logo svg{width:34px;height:34px}
+nav ul{display:flex;gap:28px;list-style:none;align-items:center}
+nav a{color:#d6deea;text-decoration:none;font-weight:500}
+nav a:hover{color:#fff}
+nav a.cta{background:var(--vermelho);color:#fff;padding:9px 20px;border-radius:6px;font-weight:600}
+nav a.cta:hover{background:var(--vermelho2)}
+.menu-btn{display:none;background:none;border:0;color:#fff;cursor:pointer;padding:8px}
+.menu-btn svg{width:28px;height:28px}
+
+/* ========== BOTÕES ========== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 28px;border-radius:6px;border:0;font:600 1rem var(--texto);text-decoration:none;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-zap{background:var(--zap);color:#fff}
+.btn-zap:hover{background:#188c46}
+.btn-borda{border:2px solid rgba(255,255,255,.55);color:#fff}
+.btn svg{width:20px;height:20px;fill:currentColor}
+
+/* ========== HERO ========== */
+.hero{background:var(--azul);color:#fff;padding:0}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;min-height:600px;padding:64px 0}
+.hero h1{font-size:clamp(3rem,8vw,5.6rem);margin-bottom:18px}
+.hero p{color:#c3cfe0;font-size:1.15rem;max-width:46ch;margin-bottom:30px}
+.acoes{display:flex;gap:12px;flex-wrap:wrap}
+.hero-img{aspect-ratio:4/5;border-radius:12px;overflow:hidden;border:6px solid var(--azul2);box-shadow:0 30px 60px rgba(0,0,0,.4)}
+
+/* imagens com fallback */
+.img{position:relative;background:linear-gradient(135deg,var(--azul2),var(--azul));display:grid;place-items:center;overflow:hidden}
+.img span{font-size:3rem;opacity:.9}
+.img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* ========== SERVIÇOS ========== */
+.servicos{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:#fff;border:1px solid var(--linha);border-radius:10px;padding:28px 26px;border-top:5px solid var(--vermelho)}
+.card .ico{width:48px;height:48px;border-radius:50%;background:var(--azul);color:#fff;display:grid;place-items:center;font-size:1.4rem;margin-bottom:16px}
+.card h3{font-size:1.6rem;margin-bottom:6px}
+.card p{color:var(--cinza);font-size:.98rem;margin-bottom:16px}
+.preco{font-weight:600;color:var(--vermelho)}
+
+/* ========== DIFERENCIAIS ========== */
+.dif{background:var(--azul);color:#fff}
+.dif .sub{color:#b4c1d6}
+.difs{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.difs div{border-left:4px solid var(--vermelho);padding-left:18px}
+.difs h3{font-size:1.5rem;margin-bottom:6px}
+.difs p{color:#b4c1d6;font-size:.97rem}
+
+/* ========== GALERIA ========== */
+.galeria{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:210px;gap:12px}
+.galeria button{border:0;padding:0;border-radius:10px;cursor:zoom-in;overflow:hidden}
+.galeria button:nth-child(1),.galeria button:nth-child(6){grid-row:span 2}
+.lightbox{position:fixed;inset:0;background:rgba(8,14,26,.92);display:none;place-items:center;z-index:100;padding:20px}
+.lightbox.on{display:grid}
+.lightbox img{max-height:86vh;max-width:94vw;border-radius:8px}
+.lightbox button{position:absolute;top:14px;right:18px;background:none;border:0;color:#fff;font-size:2.4rem;cursor:pointer}
+
+/* ========== AGENDAMENTO + CONTATO ========== */
+.contato{background:#fff;border-top:1px solid var(--linha)}
+.contato .wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+form{display:grid;gap:14px;background:var(--branco);border:1px solid var(--linha);border-radius:12px;padding:28px}
+label{display:grid;gap:6px;font-weight:500;font-size:.95rem}
+input,select{font:inherit;padding:12px 14px;border:1.5px solid var(--linha);border-radius:8px;background:#fff;width:100%}
+.dupla{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.nota{font-size:.85rem;color:var(--cinza)}
+.dados{list-style:none;margin:6px 0 26px;display:grid;gap:14px}
+.dados li{display:flex;gap:14px}
+.dados b{display:block}
+.dados small{color:var(--cinza)}
+table{width:100%;border-collapse:collapse;margin-bottom:24px}
+td{padding:9px 0;border-bottom:1px solid var(--linha)}
+td:last-child{text-align:right;font-weight:500}
+tr.hoje td{color:var(--vermelho);font-weight:700}
+
+footer{background:var(--azul);color:#a9b7cc;text-align:center;padding:30px 0;font-size:.9rem}
+.flutuante{position:fixed;right:18px;bottom:18px;z-index:60;width:60px;height:60px;border-radius:50%;background:var(--zap);display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.flutuante svg{width:32px;height:32px;fill:#fff}
+
+/* ========== RESPONSIVO ========== */
+@media(max-width:900px){
+  section{padding:56px 0}
+  .menu-btn{display:block}
+  nav ul{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--azul);padding-bottom:14px}
+  nav ul.on{display:flex}
+  nav li a{display:block;padding:15px 4%;border-top:1px solid var(--azul2)}
+  nav a.cta{margin:12px 4% 0;text-align:center}
+  .hero .wrap,.contato .wrap{grid-template-columns:1fr}
+  .hero .wrap{min-height:0;padding:36px 0 48px}
+  .hero-img{aspect-ratio:16/11;order:-1}
+  .servicos{grid-template-columns:1fr 1fr}
+  .difs{grid-template-columns:1fr 1fr}
+  .galeria{grid-template-columns:1fr 1fr;grid-auto-rows:180px}
+}
+@media(max-width:560px){
+  body{font-size:16px}
+  .servicos,.difs,.dupla{grid-template-columns:1fr}
+  .acoes .btn{width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="demo">Site de demonstração: nome, preços e endereço são fictícios.</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#inicio" class="logo" aria-label="Início">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="11" y="2" width="10" height="28" rx="5" fill="#fff"/><path d="M11 9l10-4M11 15l10-4M11 21l10-4M11 27l10-4" stroke="#c8372d" stroke-width="3.5"/></svg>
+      <span data-nome>Navalha &amp; Estilo</span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav aria-label="Principal">
+      <ul id="menuLista">
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#diferenciais">Diferenciais</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#contato">Contato</a></li>
+        <li><a class="cta" href="#contato">Agendar horário</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <div>
+      <h1>Corte bem feito. Barba no ponto.</h1>
+      <p>Tradição, técnica e um ambiente para relaxar. Agende pelo WhatsApp e saia com o visual em dia.</p>
+      <div class="acoes">
+        <a class="btn btn-zap" data-zap href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-zap"/></svg>Agendar pelo WhatsApp</a>
+        <a class="btn btn-borda" href="#servicos">Ver serviços</a>
+      </div>
+    </div>
+    <div class="hero-img img"><span>💈</span><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=900&q=75" alt="Barbeiro atendendo cliente" onerror="fallbackImg(this,'barbershop,haircut')"></div>
+  </div>
+</section>
+<div class="listra" aria-hidden="true"></div>
+
+<section id="servicos">
+  <div class="wrap">
+    <h2>Serviços</h2>
+    <p class="sub">Escolha o serviço e agende em poucos cliques.</p>
+    <div class="servicos">
+      <article class="card"><div class="ico">✂️</div><h3>Corte masculino</h3><p>Tesoura e máquina, com degradê, social ou o estilo que você preferir.</p><span class="preco">R$ 45,00</span></article>
+      <article class="card"><div class="ico">🧔</div><h3>Barba</h3><p>Toalha quente, navalha e finalização com produtos para a pele.</p><span class="preco">R$ 35,00</span></article>
+      <article class="card"><div class="ico">💈</div><h3>Corte + barba</h3><p>O pacote completo: cabelo e barba no mesmo horário, com desconto.</p><span class="preco">R$ 70,00</span></article>
+      <article class="card"><div class="ico">🪒</div><h3>Acabamento</h3><p>Contornos e pezinho para manter o corte alinhado entre as visitas.</p><span class="preco">R$ 20,00</span></article>
+      <article class="card"><div class="ico">🧴</div><h3>Tratamentos</h3><p>Hidratação, limpeza de pele e sobrancelha para cuidar do conjunto.</p><span class="preco">R$ 40,00</span></article>
+      <article class="card"><div class="ico">👦</div><h3>Corte infantil</h3><p>Atendimento paciente e corte no estilo que o pequeno escolher.</p><span class="preco">R$ 35,00</span></article>
+    </div>
+  </div>
+</section>
+
+<section class="dif" id="diferenciais">
+  <div class="wrap">
+    <h2>Por que escolher a gente</h2>
+    <p class="sub">O que torna a experiência diferente.</p>
+    <div class="difs">
+      <div><h3>Profissionais qualificados</h3><p>Barbeiros experientes e atualizados nas técnicas e tendências.</p></div>
+      <div><h3>Ambiente confortável</h3><p>Ambiente climatizado, com música boa e cadeiras confortáveis.</p></div>
+      <div><h3>Hora marcada</h3><p>Agendamento pelo WhatsApp para você não perder tempo em fila.</p></div>
+      <div><h3>Higiene e cuidado</h3><p>Materiais higienizados e lâminas descartáveis a cada cliente.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="galeria">
+  <div class="wrap">
+    <h2>Galeria</h2>
+    <p class="sub">Um pouco do nosso espaço e do nosso trabalho.</p>
+    <div class="galeria" id="galeriaGrid"></div>
+  </div>
+</section>
+
+<section class="contato" id="contato">
+  <div class="wrap">
+    <div>
+      <h2>Agende seu horário</h2>
+      <p class="sub">Escolha o serviço, o dia e a hora. A mensagem vai pronta para o WhatsApp da barbearia.</p>
+      <form id="form">
+        <label>Nome<input type="text" id="nome" required autocomplete="name"></label>
+        <label>Serviço
+          <select id="servico">
+            <option>Corte masculino</option><option>Barba</option><option>Corte + barba</option>
+            <option>Acabamento</option><option>Tratamentos</option><option>Corte infantil</option>
+          </select>
+        </label>
+        <div class="dupla">
+          <label>Data<input type="date" id="data" required></label>
+          <label>Horário<input type="time" id="hora" required></label>
+        </div>
+        <button class="btn btn-zap" type="submit"><svg viewBox="0 0 24 24"><use href="#i-zap"/></svg>Enviar pelo WhatsApp</button>
+        <p class="nota">O horário só é confirmado quando a barbearia responder.</p>
+      </form>
+    </div>
+    <div>
+      <h2>Contato</h2>
+      <ul class="dados">
+        <li><span>📍</span><div><b>Endereço</b><span data-end>Av. das Acácias, 1250 – Jardim Paulista, São Paulo/SP</span></div></li>
+        <li><span>📞</span><div><b>Telefone / WhatsApp</b><span data-tel>(11) 99999-0000</span></div></li>
+        <li><span>📷</span><div><b>Instagram</b><span data-insta>@navalhaeestilo</span></div></li>
+      </ul>
+      <h3 style="font-size:1.6rem;margin-bottom:6px">Horário de funcionamento </h3>
+      <table id="horarios"></table>
+      <a class="btn btn-zap" data-zap href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-zap"/></svg>Chamar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="ano"></span> <span data-nome>Navalha &amp; Estilo</span>. Site de demonstração.</div>
+</footer>
+
+<a class="flutuante" data-zap href="#" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp"><svg viewBox="0 0 24 24"><use href="#i-zap"/></svg></a>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Imagem ampliada"><button aria-label="Fechar">&times;</button><img alt=""></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-zap" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 2a8 8 0 1 1-4.1 14.9l-.4-.2-2.700.7.7-2.600-.3-.4A8 8 0 0 1 12 4Zm-3 3.500c-.3 0-.6.1-.8.400-.3.400-1 1-1 2.400 0 1.400 1 2.800 1.200 3 .2.200 2 3.100 4.900 4.200 2.400.9 2.900.7 3.400.7.500-.1 1.700-.7 1.900-1.400.2-.7.2-1.200.2-1.400-.1-.1-.3-.2-.6-.3l-1.800-.9c-.3-.1-.5-.1-.7.200l-.8 1c-.1.200-.3.200-.6.100-.3-.1-1.200-.4-2.300-1.400-.8-.8-1.400-1.700-1.600-2-.2-.3 0-.4.100-.6l.4-.5.300-.5c.1-.2.100-.4 0-.5l-.8-2c-.2-.5-.4-.5-.6-.5H9Z"/></symbol></svg>
+
+<script>
+/* ========== CONFIGURAÇÕES (edite aqui) ========== */
+var CONFIG = {
+  nome: "Navalha & Estilo",              // nome real
+  whatsapp: "5511999990000",              // DDI + DDD + número, sem espaços (troque!)
+  telefone: "(11) 99999-0000",
+  endereco: "Av. das Acácias, 1250 – Jardim Paulista, São Paulo/SP",
+  instagram: "@navalhaeestilo",
+  mensagemPadrao: "Olá! Vim pelo site e gostaria de agendar um horário."
+};
+var HORARIOS = [ // índice 0 = domingo; abre/fecha em horas (24 = meia-noite)
+  ["Domingo","Fechado",null,null],
+  ["Segunda","Fechado",null,null],
+  ["Terça","09h – 19h",9,19],
+  ["Quarta","09h – 19h",9,19],
+  ["Quinta","09h – 19h",9,19],
+  ["Sexta","09h – 19h",9,19],
+  ["Sábado","09h – 17h",9,17]
+];
+var GALERIA = [ // i = código da foto no Unsplash; k = palavra-chave reserva; ou use f:"fotos/arquivo.jpg"
+  {i:"1585747860715-2ba37e788b70", k:"barbershop", t:"Ambiente da barbearia"},
+  {i:"1621605815971-fbc98d665033", k:"haircut", t:"Corte de cabelo"},
+  {i:"1599351431202-1e0f0137899a", k:"beard,barber", t:"Barba"},
+  {i:"1622286342621-4bd786c2447c", k:"barber,razor", t:"Navalha"},
+  {i:"1605497788044-5a32c7078486", k:"barber,chair", t:"Atendimento"},
+  {i:"1503951914875-452162b0f3f1", k:"hairstyle,men", t:"Estilo masculino"}
+];
+/* =============================================== */
+
+function zap(msg){return "https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(msg);}
+function $(s){return document.querySelector(s);}
+/* se a foto falhar, tenta outra fonte; se falhar de novo, fica o ícone */
+function fallbackImg(img,k){
+  if(img.dataset.t){img.remove();return;}
+  img.dataset.t=1; img.src="https://loremflickr.com/800/800/"+k;
+}
+
+/* dados da empresa */
+document.querySelectorAll("[data-nome]").forEach(function(e){e.textContent=CONFIG.nome});
+$("[data-end]").textContent=CONFIG.endereco;
+$("[data-tel]").textContent=CONFIG.telefone;
+$("[data-insta]").textContent=CONFIG.instagram;
+document.querySelectorAll("[data-zap]").forEach(function(a){a.href=zap(CONFIG.mensagemPadrao)});
+$("#ano").textContent=new Date().getFullYear();
+
+/* horários */
+var dia=new Date().getDay(), tb=$("#horarios");
+HORARIOS.forEach(function(h,i){
+  var tr=document.createElement("tr"); if(i===dia) tr.className="hoje";
+  tr.innerHTML="<td>"+h[0]+"</td><td>"+h[1]+"</td>"; tb.appendChild(tr);
+});
+
+/* galeria + lightbox */
+var grid=$("#galeriaGrid"), lb=$("#lightbox"), lbImg=lb.querySelector("img");
+GALERIA.forEach(function(g,n){
+  var b=document.createElement("button");
+  b.className="img"; b.setAttribute("aria-label","Ampliar: "+g.t);
+  var src=g.f||(g.i?"https://images.unsplash.com/photo-"+g.i+"?auto=format&fit=crop&w=800&q=75":"https://loremflickr.com/800/800/"+g.k+"?lock="+(n+1));
+  b.innerHTML="<span>💈</span><img src=\""+src+"\" alt=\""+g.t+"\" loading=\"lazy\" onerror=\"fallbackImg(this,'"+g.k+"')\">";
+  b.addEventListener("click",function(){var im=b.querySelector("img"); if(!im) return; lbImg.src=im.src; lbImg.alt=im.alt; lb.classList.add("on");});
+  grid.appendChild(b);
+});
+lb.addEventListener("click",function(){lb.classList.remove("on")});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")lb.classList.remove("on")});
+
+/* agendamento */
+var di=$("#data"); di.min=new Date().toISOString().split("T")[0];
+$("#form").addEventListener("submit",function(e){
+  e.preventDefault();
+  var d=di.value.split("-").reverse().join("/");
+  var m="Olá! Gostaria de agendar um horário na "+CONFIG.nome+".\n\nNome: "+$("#nome").value+
+        "\nServiço: "+$("#servico").value+"\nData: "+d+"\nHorário: "+$("#hora").value;
+  window.open(zap(m),"_blank");
+});
+
+/* menu mobile */
+var mb=$("#menuBtn"), ml=$("#menuLista");
+mb.addEventListener("click",function(){mb.setAttribute("aria-expanded",ml.classList.toggle("on"))});
+ml.addEventListener("click",function(e){if(e.target.tagName==="A"){ml.classList.remove("on");mb.setAttribute("aria-expanded","false")}});
+</script>
+</body>
+</html>
